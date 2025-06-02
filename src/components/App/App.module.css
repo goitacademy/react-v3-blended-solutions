@@ -1,0 +1,43 @@
+.app {
+  background-color: #f0fdf4;
+  color: #1b4332;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  background-color: #d8f3dc;
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 64, 0, 0.1);
+}
+
+.button {
+  background-color: #40916c;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background-color: #2d6a4f;
+  transform: translateY(-1px);
+}
+
+.button:active {
+  background-color: #1b4332;
+  transform: translateY(0);
+}

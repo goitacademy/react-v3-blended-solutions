@@ -1,0 +1,70 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.listItem {
+  background-color: #ffffff;
+  border: 1px solid #b7e4c7;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 64, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #2d6a4f;
+}
+
+.content {
+  flex-grow: 1;
+  font-size: 1rem;
+  color: #344e41;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete {
+  padding: 0.5rem 1rem;
+  background-color: #b34747;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.delete:hover {
+  background-color: #8a3535;
+}
+
+.edit {
+  padding: 0.5rem 1rem;
+  background-color: #40916c; /* зелений, гармонійний до теми */
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-right: 0.5rem;
+}
+
+.edit:hover {
+  background-color: #2d6a4f;
+}

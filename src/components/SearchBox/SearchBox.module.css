@@ -1,0 +1,22 @@
+.input {
+  width: 100%;
+  max-width: 320px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #b7e4c7;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: "Montserrat", sans-serif;
+  background-color: #ffffff;
+  color: #1b4332;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input::placeholder {
+  color: #6c757d;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #40916c;
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.2);
+}
