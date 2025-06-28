@@ -65,7 +65,7 @@ export default function PostsClient({ initialData, userId }: PostsClientProps) {
       <main className={css.main}>
         <section className={css.postsSection}>
           <header className={css.toolbar}>
-            <SearchBox value={searchQuery} onSearch={changeSearchQuery} />
+            <SearchBox onSearch={changeSearchQuery} />
             {totalPages > 1 && (
               <Pagination
                 totalPages={totalPages}
