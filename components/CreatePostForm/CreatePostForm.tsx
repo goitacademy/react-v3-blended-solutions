@@ -2,11 +2,10 @@
 
 import * as Yup from 'yup';
 import { Field, Form, Formik, FormikHelpers, ErrorMessage } from 'formik';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createPost, fetchUsers } from '@/lib/api';
 
 import css from './CreatePostForm.module.css';
-import { useEffect, useState } from 'react';
 import { User } from '@/types/user';
 
 const PostSchema = Yup.object().shape({
@@ -34,7 +33,6 @@ const initialValues: FormValues = {
 };
 
 export default function CreatePostForm({ onClose }: PostFormProps) {
-  const [users, setUsers] = useState<User[] | null>(null);
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
@@ -46,14 +44,10 @@ export default function CreatePostForm({ onClose }: PostFormProps) {
     },
   });
 
-  useEffect(() => {
-    const fn = async () => {
-      const res = await fetchUsers();
-      setUsers(res);
-    };
-
-    fn();
-  }, []);
+  const { data: users } = useQuery<User[]>({
+    queryKey: ['users'],
+    queryFn: fetchUsers,
+  });
 
   const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
     mutate(values);

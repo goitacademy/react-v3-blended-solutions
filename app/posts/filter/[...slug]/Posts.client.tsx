@@ -25,7 +25,6 @@ export default function PostsClient({ initialData, userId }: PostsClientProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditPost, setIsEditPost] = useState(false);
   const [editedPost, setEditedPost] = useState<Post | null>(null);
-  const [isCreatePost, setIsCreatePost] = useState(false);
 
   const { data } = useQuery({
     queryKey: ['posts', searchQuery, currentPage, userId],
@@ -56,10 +55,6 @@ export default function PostsClient({ initialData, userId }: PostsClientProps) {
     setIsEditPost(!isEditPost);
   };
 
-  const toggleCreatePost = () => {
-    setIsCreatePost(!isCreatePost);
-  };
-
   return (
     <div className={css.app}>
       <main className={css.main}>
@@ -78,7 +73,6 @@ export default function PostsClient({ initialData, userId }: PostsClientProps) {
               className={css.button}
               onClick={() => {
                 toggleModal();
-                toggleCreatePost();
               }}
             >
               Create post +
@@ -86,21 +80,19 @@ export default function PostsClient({ initialData, userId }: PostsClientProps) {
           </header>
           {isModalOpen && (
             <Modal onClose={toggleModal}>
-              {isCreatePost && (
-                <CreatePostForm
-                  onClose={() => {
-                    toggleModal();
-                    toggleCreatePost();
-                  }}
-                />
-              )}
-              {isEditPost && editedPost && (
+              {isEditPost && editedPost ? (
                 <EditPostForm
                   initialValues={editedPost}
                   onClose={() => {
                     toggleModal();
                     toggleEditPost();
                     setEditedPost(null);
+                  }}
+                />
+              ) : (
+                <CreatePostForm
+                  onClose={() => {
+                    toggleModal();
                   }}
                 />
               )}

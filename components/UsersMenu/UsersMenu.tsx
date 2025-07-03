@@ -6,13 +6,18 @@ import Link from 'next/link';
 import DropdownPortal from '@/components/DropdownPortal/DropdownPortal';
 import { fetchUsers } from '@/lib/api';
 import { User } from '@/types/user';
+import { useQuery } from '@tanstack/react-query';
 
 export default function UsersMenu() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0 });
-  const [users, setUsers] = useState<User[] | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLUListElement>(null);
+
+  const { data: users } = useQuery<User[]>({
+    queryKey: ['users'],
+    queryFn: fetchUsers,
+  });
 
   const toggleMenu = () => {
     setIsOpenMenu((prev) => !prev);
@@ -25,15 +30,6 @@ export default function UsersMenu() {
       });
     }
   };
-
-  useEffect(() => {
-    const fn = async () => {
-      const res = await fetchUsers();
-      setUsers(res);
-    };
-
-    fn();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
