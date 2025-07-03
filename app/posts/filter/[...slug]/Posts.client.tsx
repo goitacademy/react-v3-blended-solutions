@@ -23,7 +23,6 @@ export default function PostsClient({ initialData, userId }: PostsClientProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditPost, setIsEditPost] = useState(false);
   const [editedPost, setEditedPost] = useState<Post | null>(null);
 
   const { data } = useQuery({
@@ -48,11 +47,9 @@ export default function PostsClient({ initialData, userId }: PostsClientProps) {
   const totalPages = Math.ceil(data.totalCount / 8);
   const posts = data?.posts ?? [];
 
-  const toggleEditPost = (postToEdit?: Post) => {
-    if (postToEdit) {
-      setEditedPost(postToEdit);
-    }
-    setIsEditPost(!isEditPost);
+  const toggleEditPost = (post: Post) => {
+    setEditedPost(post);
+    setIsModalOpen(true);
   };
 
   return (
@@ -80,12 +77,11 @@ export default function PostsClient({ initialData, userId }: PostsClientProps) {
           </header>
           {isModalOpen && (
             <Modal onClose={toggleModal}>
-              {isEditPost && editedPost ? (
+              {editedPost ? (
                 <EditPostForm
                   initialValues={editedPost}
                   onClose={() => {
                     toggleModal();
-                    toggleEditPost();
                     setEditedPost(null);
                   }}
                 />
