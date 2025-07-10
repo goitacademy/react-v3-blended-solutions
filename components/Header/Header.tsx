@@ -1,28 +1,39 @@
-import Link from 'next/link';
+'use client';
 
-import css from './Header.module.css';
-import TagsMenu from '../UsersMenu/UsersMenu';
+import Link from 'next/link';
+import { MdCurrencyExchange } from 'react-icons/md';
+
+import SelectRates from '../SelectRates/SelectRates';
+import { useCurrencyStore } from '@/lib/stores/currencyStore';
+
+import styles from './Header.module.css';
 
 export default function Header() {
+  const baseCurrency = useCurrencyStore((state) => state.baseCurrency);
+
   return (
-    <header className={css.header}>
-      <div className={css.headerContainer}>
-        <Link href="/" aria-label="Home" className={css.headerLink}>
-          Postly
-        </Link>
-        <nav aria-label="Main Navigation">
-          <ul className={css.navigation}>
-            <li className={css.navigationItem}>
-              <Link className={css.navigationLink} href="/">
-                Home
-              </Link>
-            </li>
-            <li className={css.navigationItem}>
-              <TagsMenu />
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <>
+      <header className={styles.header}>
+        <div className={styles.wrapper}>
+          <MdCurrencyExchange className={styles.logo} />
+          <nav>
+            <ul className={styles.nav}>
+              <li>
+                <Link href="/" className={styles.link}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/rates" className={styles.link}>
+                  Rates
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        {baseCurrency && <SelectRates baseCurrency={baseCurrency} />}
+      </header>
+    </>
   );
 }
