@@ -19,14 +19,13 @@ export default function RatesList({ rates }: RatesListProps): ReactElement {
 
   return (
     <Grid>
-      1
-      {/* {rates.map(({ key, value }) => (
-      <GridItem key={key}>
-        <p className={styles.text}>
-          1 {key} = {value}
-        </p>
-      </GridItem>
-    ))} */}
+      {rates.map(({ key, value }) => (
+        <GridItem key={key}>
+          <p className={styles.text}>
+            1 {key} = {value}
+          </p>
+        </GridItem>
+      ))}
     </Grid>
   );
 }

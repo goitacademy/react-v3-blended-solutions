@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Wave } from 'react-animated-text';
 
 import Container from '@/components/Container/Container';
@@ -15,35 +15,25 @@ import { latestRates } from '@/lib/service/exchangeAPI';
 
 import css from './RatesPage.module.css';
 
-function useHasHydrated() {
-  const [hasHydrated, setHasHydrated] = useState(false);
-  useEffect(() => setHasHydrated(true), []);
-  return hasHydrated;
-}
-
 export default function RatesPage() {
-  const hasHydrated = useHasHydrated();
+  const baseCurrency = useCurrencyStore((state) => state.baseCurrency);
+  const rates = useCurrencyStore((state) => state.rates);
+  const filter = useCurrencyStore((state) => state.filter);
+  const isLoading = useCurrencyStore((state) => state.isLoading);
+  const isError = useCurrencyStore((state) => state.isError);
 
-  const { baseCurrency, rates, filter, setRates, isLoading, isError, setIsLoading, setIsError } =
-    useCurrencyStore((state) => ({
-      baseCurrency: state.baseCurrency,
-      rates: state.rates,
-      filter: state.filter,
-      isLoading: state.isLoading,
-      isError: state.isError,
-      setRates: state.setRates,
-      setIsLoading: state.setIsLoading,
-      setIsError: state.setIsError,
-    }));
+  const setRates = useCurrencyStore((state) => state.setRates);
+  const setIsLoading = useCurrencyStore((state) => state.setIsLoading);
+  const setIsError = useCurrencyStore((state) => state.setIsError);
 
   const filteredRates = useMemo(() => {
     return rates
       .filter(([key]) => key !== baseCurrency && key.toLowerCase().includes(filter))
-      .map(([key, value]) => ({ key, value: Number((1 / value).toFixed(2)) }));
+      .map(([key, value]) => ({ key, value: (1 / value).toFixed(2) }));
   }, [rates, baseCurrency, filter]);
 
   useEffect(() => {
-    if (!baseCurrency || !hasHydrated) return;
+    if (!baseCurrency) return;
 
     setIsLoading(true);
 
@@ -58,9 +48,8 @@ export default function RatesPage() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [baseCurrency, hasHydrated, setRates, setIsLoading, setIsError]);
+  }, [baseCurrency, setRates, setIsLoading, setIsError]);
 
-  if (!hasHydrated) return <Loader />;
   if (!baseCurrency) return <Loader />;
 
   return (
@@ -78,7 +67,7 @@ export default function RatesPage() {
               />
             }
           />
-          {/* {rates.length > 0 && <Filter />} */}
+          {rates.length > 0 && <Filter />}
           {filteredRates.length > 0 && <RatesList rates={filteredRates} />}
           {isLoading && <Loader />}
           {isError && (

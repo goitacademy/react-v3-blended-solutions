@@ -1,5 +1,4 @@
 import Header from '@/components/Header/Header';
-import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import GeolocationChecker from '@/components/GeolocationChecker/GeolocationChecker';
 
 import 'modern-normalize';
@@ -14,11 +13,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <TanStackProvider>
-          <GeolocationChecker />
-          <Header />
-          {children}
-        </TanStackProvider>
+        <GeolocationChecker />
+        <Header />
+        {children}
       </body>
     </html>
   );

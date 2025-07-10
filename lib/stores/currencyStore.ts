@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 interface ExchangeInfo {
   from: string;
@@ -44,7 +44,6 @@ export const useCurrencyStore = create<CurrencyStore>()(
     }),
     {
       name: 'currency-storage',
-      storage: typeof window !== 'undefined' ? createJSONStorage(() => localStorage) : undefined,
       partialize: (state) => ({ baseCurrency: state.baseCurrency }),
     }
   )
