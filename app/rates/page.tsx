@@ -29,7 +29,7 @@ export default function RatesPage() {
   const filteredRates = useMemo(() => {
     return rates
       .filter(([key]) => key !== baseCurrency && key.toLowerCase().includes(filter))
-      .map(([key, value]) => ({ key, value: (1 / value).toFixed(2) }));
+      .map(([key, value]) => ({ key, value: Number((1 / value).toFixed(2)) }));
   }, [rates, baseCurrency, filter]);
 
   useEffect(() => {
