@@ -16,6 +16,7 @@ interface CurrencyStore {
   filter: string;
   isLoading: boolean;
   isError: string | null;
+  hasHydrated: boolean;
 
   setBaseCurrency: (currency: string) => void;
   setExchangeInfo: (info: ExchangeInfo | null) => void;
@@ -23,6 +24,7 @@ interface CurrencyStore {
   setFilter: (filter: string) => void;
   setIsLoading: (loading: boolean) => void;
   setIsError: (error: string | null) => void;
+  setHasHydrated: (state: boolean) => void;
 }
 
 export const useCurrencyStore = create<CurrencyStore>()(
@@ -34,6 +36,7 @@ export const useCurrencyStore = create<CurrencyStore>()(
       filter: '',
       isLoading: false,
       isError: null,
+      hasHydrated: false,
 
       setBaseCurrency: (currency) => set({ baseCurrency: currency }),
       setExchangeInfo: (info) => set({ exchangeInfo: info }),
@@ -41,10 +44,14 @@ export const useCurrencyStore = create<CurrencyStore>()(
       setFilter: (filter) => set({ filter }),
       setIsLoading: (loading) => set({ isLoading: loading }),
       setIsError: (error) => set({ isError: error }),
+      setHasHydrated: (state) => set({ hasHydrated: state }),
     }),
     {
       name: 'currency-storage',
       partialize: (state) => ({ baseCurrency: state.baseCurrency }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     }
   )
 );
